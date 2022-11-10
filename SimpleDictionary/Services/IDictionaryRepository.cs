@@ -1,11 +1,10 @@
 ﻿
 using SimpleDictionary.Models.Entities;
 
-namespace SimpleDictionary.Services
+namespace SimpleDictionary.Services;
+
+public interface IDictionaryRepository
 {
-    public interface IDictionaryRepository
-    {
-        ICollection<DictionaryEntry> ReadAll();
-        DictionaryEntry Create(DictionaryEntry entry);
-    }
+    ICollection<DictionaryEntry> ReadAll();
+    DictionaryEntry Create(DictionaryEntry entry);
 }
