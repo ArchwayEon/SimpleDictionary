@@ -1,8 +1,7 @@
-﻿namespace SimpleDictionary.Models.Entities
+﻿namespace SimpleDictionary.Models.Entities;
+
+public class DictionaryEntry
 {
-    public class DictionaryEntry
-    {
-        public string Word { get; set; } = String.Empty;
-        public string Meaning { get; set; } = String.Empty;
-    }
+    public string Word { get; set; } = String.Empty;
+    public string Meaning { get; set; } = String.Empty;
 }
