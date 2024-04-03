@@ -1,43 +1,48 @@
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
+using NUnit.Framework;
 using SimpleDictionaryAcceptanceTesting.Drivers;
+using SimpleDictionaryAcceptanceTesting.Pages;
 using System;
 using TechTalk.SpecFlow;
 
 namespace SimpleDictionaryAcceptanceTesting.StepDefinitions;
 
+[Parallelizable(ParallelScope.Self)]
 [Binding]
 public class AddWordStepDefinitions
 {
     private readonly PlaywrightDriver _driver;
+    private readonly AddWordPage _addWordPage;
 
     public AddWordStepDefinitions(PlaywrightDriver driver)
     {
         _driver = driver;
+        _addWordPage = new AddWordPage(_driver.Page);
     }
 
     [Given(@"I am on the add word page")]
-    public void GivenIAmOnTheAddWordPage()
+    public async Task GivenIAmOnTheAddWordPage()
     {
-        _driver.Page.GotoAsync("https://localhost:7190/Home/AddWord");
+        await _driver.Page.GotoAsync("https://localhost:7190/Home/AddWord");
     }
 
     [Given(@"I have entered (.*) as the Word")]
-    public void GivenIHaveEntered_AsTheWord(string word)
+    public async Task GivenIHaveEntered_AsTheWord(string word)
     {
-        //throw new PendingStepException();
+        await _addWordPage.InputWord(word);
     }
 
     [Given(@"I have entered (.*) as the Meaning")]
-    public void GivenIHaveEntered_AsTheMeaning(string meaning)
+    public async Task GivenIHaveEntered_AsTheMeaning(string meaning)
     {
-        //throw new PendingStepException();
+        await _addWordPage.InputMeaning(meaning);
     }
 
     [When(@"I press Create")]
     public void WhenIPressCreate()
     {
-        //throw new PendingStepException();
+        //_addWordPage.PressCreate();
     }
 
     [Then(@"the app should respond with the index page")]

@@ -7,27 +7,24 @@ using System.Threading.Tasks;
 
 namespace SimpleDictionaryAcceptanceTesting.Drivers;
 
+[Binding]
 public class PlaywrightDriver : IDisposable
 {
-    private readonly Task<IPage> _page;
+    private IPage? _page;
     private IBrowser? _browser;
+    private IPlaywright? _playwright;
 
-    public IPage Page => _page.Result;
+    public IPage Page => _page!;
 
-    public PlaywrightDriver()
+    [BeforeScenario]
+    public async Task SetNewPage()
     {
-        _page = GetNewPage();
-    }
-
-    private async Task<IPage> GetNewPage()
-    {
-        using var playwright = await Playwright.CreateAsync();
-        _browser = await playwright.Chromium.LaunchAsync(new()
+        _playwright = await Playwright.CreateAsync();
+        _browser = await _playwright.Chromium.LaunchAsync(new()
         {
-            Headless = false,
-            SlowMo = 100
+            Headless = false
         });
-        return await _browser.NewPageAsync();
+        _page = await _browser.NewPageAsync();
     }
 
     public void Dispose()
